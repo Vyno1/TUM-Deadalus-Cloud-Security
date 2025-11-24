@@ -47,8 +47,9 @@ resource "aws_s3_bucket_policy" "tropical_vault_bucket_policy" {
         AWS = data.aws_iam_role.web_lambda_exec_role.arn
       },
       Action    = "s3:GetObject",
-      Resource  = "${aws_s3_bucket.tropical_vault_bucket.arn}/*"
-    }]
+      Resource  = "${aws_s3_bucket.tropical_vault_bucket.arn}/public/*"
+    }
+    ]
   })
 }
 
