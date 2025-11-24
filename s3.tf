@@ -48,7 +48,15 @@ resource "aws_s3_bucket_policy" "tropical_vault_bucket_policy" {
       },
       Action    = "s3:GetObject",
       Resource  = "${aws_s3_bucket.tropical_vault_bucket.arn}/public/*"
-    }
+    },
+      # 2. NEW: Explicitly DENY Critical (Add this)
+      {
+        Sid       = "DenyLambdaReadCritical"
+        Effect    = "Deny"
+        Principal = { AWS = data.aws_iam_role.web_lambda_exec_role.arn }
+        Action    = "s3:GetObject"
+        Resource  = "${aws_s3_bucket.tropical_vault_bucket.arn}/critical/*"
+      }
     ]
   })
 }
